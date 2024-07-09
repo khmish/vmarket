@@ -1,71 +1,59 @@
 models:
   Country:
-    id: id
     name: string
     relationships:
       hasMany: Region
 
   Region:
-    id: id
     name: string
     country_id: foreign:countries
     relationships:
-      
       hasMany: City
 
   City:
-    id: id
     name: string
     region_id: foreign:regions
     relationships:
-      
       hasMany: Vendor,DeliveryZone
 
   Vendor:
-    id: id
     name: string
     email: string
     phone: string
     address: string
     city_id: foreign:cities
-    branch_id: integer # This will be a self-referencing foreign key
+    branch_id: foreign:vendors
     relationships:
       hasMany: Product,User,DeliveryZone
 
   ProductType:
-    id: id
     name: string
     relationships:
       hasMany: Product
 
   Product:
-    id: id
     vendor_id: foreign:vendors
     product_type_id: foreign:product_types
     cost: float
       
 
   User:
-    id: id
     email: string
     vendor_id: foreign:vendors
     role: string
       
 
   CarType:
-    id: id
     name: string
     relationships:
       hasMany: Car
 
   RefrigeratingType:
-    id: id
     name: string
     relationships:
       hasMany: Car
 
   Car:
-    id: id
     name: string
     capacity: float
     car_type_id: foreign:car_types
@@ -79,7 +67,6 @@ models:
       
 
   DeliveryZone:
-    id: id
     city_id: foreign:cities
     vendor_id: foreign:vendors
     cost: float
