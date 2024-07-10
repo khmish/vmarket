@@ -4,17 +4,18 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\User;
+use App\Models\City;
+use App\Models\DeliveryZone;
 use App\Models\Vendor;
 
-class UserFactory extends Factory
+class DeliveryZoneFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = DeliveryZone::class;
 
     /**
      * Define the model's default state.
@@ -22,13 +23,9 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->safeEmail(),
+            'city_id' => City::factory(),
             'vendor_id' => Vendor::factory(),
-            'password' => $this->faker->password(),
-            'role' => $this->faker->word(),
-            'email_verified_at' => $this->faker->dateTime(),
-            'remember_token' => $this->faker->uuid(),
+            'cost' => $this->faker->randomFloat(0, 0, 9999999999.),
         ];
     }
 }

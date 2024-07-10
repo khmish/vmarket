@@ -1,63 +1,81 @@
 models:
   Country:
     name: string
+    code: string
+    softDeletes
     relationships:
       hasMany: Region
 
   Region:
     name: string
     country_id: foreign:countries
+    softDeletes
     relationships:
       hasMany: City
 
   City:
     name: string
     region_id: foreign:regions
+    softDeletes
     relationships:
       hasMany: Vendor,DeliveryZone
 
   Vendor:
     name: string
-    email: string
-    phone: string
-    address: string
+    email: string nullable
+    phone: string nullable
+    address: string nullable
     city_id: foreign:cities
-    branch_id: foreign:vendors
+    branch_id: foreign:vendors nullable
+    softDeletes
     relationships:
       hasMany: Product,User,DeliveryZone
 
   ProductType:
     name: string
+    softDeletes
     relationships:
       hasMany: Product
 
   Product:
+    name: string
+    description: string nullable
+    image: string nullable
     vendor_id: foreign:vendors
     product_type_id: foreign:product_types
-    cost: float
+    cost: float default:0.0
+    softDeletes
       
 
   User:
-    email: string
-    vendor_id: foreign:vendors
-    role: string
+    name: string
+    email: string unique
+    vendor_id: foreign:vendors nullable
+    password: string
+    role: string default:admin
+    email_verified_at: timestamp nullable
+    remember_token: string nullable
+    softDeletes
       
 
   CarType:
     name: string
+    softDeletes
     relationships:
       hasMany: Car
 
   RefrigeratingType:
     name: string
+    softDeletes
     relationships:
       hasMany: Car
 
   Car:
     name: string
-    capacity: float
+    capacity: float default:0.0
     car_type_id: foreign:car_types
     refrigerating_type_id: foreign:refrigerating_types
+    softDeletes
     relationships:
       hasMany: VendorCar
 
@@ -69,5 +87,6 @@ models:
   DeliveryZone:
     city_id: foreign:cities
     vendor_id: foreign:vendors
-    cost: float
+    cost: float default:0.0
+    softDeletes
       

@@ -1,0 +1,50 @@
+created:
+    - database/factories/CountryFactory.php
+    - database/factories/RegionFactory.php
+    - database/factories/CityFactory.php
+    - database/factories/VendorFactory.php
+    - database/factories/ProductTypeFactory.php
+    - database/factories/ProductFactory.php
+    - database/factories/UserFactory.php
+    - database/factories/CarTypeFactory.php
+    - database/factories/RefrigeratingTypeFactory.php
+    - database/factories/CarFactory.php
+    - database/factories/VendorCarFactory.php
+    - database/factories/DeliveryZoneFactory.php
+    - database/migrations/2024_07_09_194449_create_countries_table.php
+    - database/migrations/2024_07_09_194450_create_regions_table.php
+    - database/migrations/2024_07_09_194451_create_cities_table.php
+    - database/migrations/2024_07_09_194452_create_vendors_table.php
+    - database/migrations/2024_07_09_194453_create_product_types_table.php
+    - database/migrations/2024_07_09_194454_create_products_table.php
+    - database/migrations/2024_07_09_194455_create_users_table.php
+    - database/migrations/2024_07_09_194456_create_car_types_table.php
+    - database/migrations/2024_07_09_194457_create_refrigerating_types_table.php
+    - database/migrations/2024_07_09_194458_create_cars_table.php
+    - database/migrations/2024_07_09_194459_create_vendor_cars_table.php
+    - database/migrations/2024_07_09_194500_create_delivery_zones_table.php
+    - app/Models/Country.php
+    - app/Models/Region.php
+    - app/Models/City.php
+    - app/Models/Vendor.php
+    - app/Models/ProductType.php
+    - app/Models/Product.php
+    - app/Models/User.php
+    - app/Models/CarType.php
+    - app/Models/RefrigeratingType.php
+    - app/Models/Car.php
+    - app/Models/VendorCar.php
+    - app/Models/DeliveryZone.php
+models:
+    Country: { name: string, code: string, softdeletes: softDeletes, relationships: { hasMany: Region } }
+    Region: { name: string, country_id: 'foreign:countries', softdeletes: softDeletes, relationships: { hasMany: City } }
+    City: { name: string, region_id: 'foreign:regions', softdeletes: softDeletes, relationships: { hasMany: 'Vendor,DeliveryZone' } }
+    Vendor: { name: string, email: 'string nullable', phone: 'string nullable', address: 'string nullable', city_id: 'foreign:cities', branch_id: 'foreign:vendors nullable', softdeletes: softDeletes, relationships: { hasMany: 'Product,User,DeliveryZone' } }
+    ProductType: { name: string, softdeletes: softDeletes, relationships: { hasMany: Product } }
+    Product: { name: string, description: 'string nullable', image: 'string nullable', vendor_id: 'foreign:vendors', product_type_id: 'foreign:product_types', cost: 'float default:0.0', softdeletes: softDeletes }
+    User: { name: string, email: 'string unique', vendor_id: 'foreign:vendors', password: string, role: 'string default:admin', email_verified_at: 'timestamp nullable', remember_token: 'string nullable', softdeletes: softDeletes }
+    CarType: { name: string, softdeletes: softDeletes, relationships: { hasMany: Car } }
+    RefrigeratingType: { name: string, softdeletes: softDeletes, relationships: { hasMany: Car } }
+    Car: { name: string, capacity: 'float default:0.0', car_type_id: 'foreign:car_types', refrigerating_type_id: 'foreign:refrigerating_types', softdeletes: softDeletes, relationships: { hasMany: VendorCar } }
+    VendorCar: { car_id: 'foreign:cars', vendor_id: 'foreign:vendors' }
+    DeliveryZone: { city_id: 'foreign:cities', vendor_id: 'foreign:vendors', cost: 'float default:0.0', softdeletes: softDeletes }

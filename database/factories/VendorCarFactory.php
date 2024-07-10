@@ -4,17 +4,18 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
-use App\Models\User;
+use App\Models\Car;
 use App\Models\Vendor;
+use App\Models\VendorCar;
 
-class UserFactory extends Factory
+class VendorCarFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = User::class;
+    protected $model = VendorCar::class;
 
     /**
      * Define the model's default state.
@@ -22,13 +23,8 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'email' => $this->faker->safeEmail(),
+            'car_id' => Car::factory(),
             'vendor_id' => Vendor::factory(),
-            'password' => $this->faker->password(),
-            'role' => $this->faker->word(),
-            'email_verified_at' => $this->faker->dateTime(),
-            'remember_token' => $this->faker->uuid(),
         ];
     }
 }
