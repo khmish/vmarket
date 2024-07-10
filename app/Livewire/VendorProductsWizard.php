@@ -2,17 +2,26 @@
 
 namespace App\Livewire;
 
+use App\Models\City;
+use App\Models\ProductType;
+use App\Models\Region;
+use App\Models\Vendor;
+use Filament\Forms\Components\Repeater;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Livewire\Component;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 use Filament\Forms\Components\Wizard;
 use Filament\Forms\Components\Wizard\Step;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Facades\Blade;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
+use Illuminate\Support\Collection;
 
 class VendorProductsWizard extends Component implements HasForms
 {
@@ -31,33 +40,99 @@ class VendorProductsWizard extends Component implements HasForms
     }
     public function form(Form $form): Form
     {
+        //     "name: string
+        // email: string nullable
+        // phone: string nullable
+        // address: string nullable
+        // city_id: foreign:cities
+        // branch_id: foreign:vendors nullable"
         return $form
             ->schema([
                 Wizard::make([
-                    Step::make('General Information')
+                    Step::make('معلومات عامة')
                         ->schema([
                             TextInput::make('name')
-                                ->label('اسم المصنع')
-                                ->required()
-                                ->maxLength(255)
-                                ->unique('factories', 'name'),
+                                ->label('الاسم')
+                                ->maxLength(255),
+                            TextInput::make('email')
+                                ->label('بريد الالكتروني')
+                                ->maxLength(255),
+                            TextInput::make('phone')
+                                ->label('رقم الهاتف')
+                                ->maxLength(255),
+                            TextInput::make('address')
+                                ->label('عنوان')
+                                ->maxLength(255),
+                            Select::make('region_id')
+                                ->label('المنطقة')
+                                ->options(Region::all()->pluck('name', 'id'))
+                                ->afterStateUpdated(fn (Get $get, Set $set) => $set('city_id', null))
+                                ->preload()
+                                ->searchable()
+                                ->reactive(),
+                            Select::make('city_id')
+                                ->label('المدينة')
+                                ->options(fn (Get $get): Collection => City::query()->whereRegionId($get('region_id'))->pluck('name', 'id'))
+                                ->searchable()
+                                ->preload(),
+                            Select::make('branch_id')
+                                ->label('اختر الشركة التابعة')
+                                ->options(Vendor::all()->pluck('name', 'id'))
+                                ->preload()
+                                ->searchable(),
                         ]),
-                        Step::make('General Information')
+                    //                     "name: string
+                    // description: string nullable
+                    // image: string nullable
+                    // vendor_id: foreign:vendors
+                    // product_type_id: foreign:product_types
+                    // cost: float default:0.0"
+                    Step::make(' الاصناف')
                         ->schema([
-                            TextInput::make('name')
-                                ->label('اسم المصنع')
-                                ->required()
-                                ->maxLength(255)
-                                ->unique('factories', 'name'),
+                            Repeater::make('products')
+                                ->label('المنتجات')
+                                ->minItems(1)
+                                // ->columns([
+                                //     'md' => 2
+                                // ])
+                                ->schema([
+                                    TextInput::make('name')
+                                        ->label('اسم المنتج')
+                                        ->maxLength(255)
+                                        ->required(),
+                                    TextInput::make('description')
+                                        ->label('')
+                                        ->required(),
+                                    Select::make('vendor_id')
+                                        ->label('')
+                                        ->options(Vendor::all()->pluck('name', 'id'))
+                                        ->searchable()
+                                        ->preload()
+                                        ->required(),
+                                    Select::make('product_type_id')
+                                        ->label('')
+                                        ->options(ProductType::all()->pluck('name', 'id'))
+                                        ->searchable()
+                                        ->preload()
+                                        ->required(),
+                                    TextInput::make('description')
+                                        ->label('')
+                                        ->required(),
+                                ]),
+
                         ]),
-                ]),
+                ])->submitAction(new HtmlString(Blade::render(<<<BLADE
+                <x-filament::button  type="submit"  size="sm">
+                    Submit
+                </x-filament::button>
+            BLADE)))->statePath('data'),
             ]);
     }
     public function submit(): void
     {
-        if (app()->hasDebugModeEnabled()) {
-            logger($this->data);
-        }
+        // if (app()->hasDebugModeEnabled()) {
+        dd($this->data);
+        // }
 
         $this->validate();
 
