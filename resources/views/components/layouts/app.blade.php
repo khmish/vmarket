@@ -21,8 +21,9 @@
 </head>
 
 <body class="antialiased">
+    @livewire('components.popup-banner')
 <x-header/>
-<div>
+    
     @if (session()->has('message'))
         <div class="p-4 mb-10 text-center text-2xl text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
             role="alert">
@@ -31,7 +32,7 @@
     @endif
 </div>
 {{ $slot }}
-
+<x-footer/>
 @filamentScripts
 @livewireScripts
 @vite('resources/js/app.js')

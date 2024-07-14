@@ -2,10 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
+Route::any('/', function () {
     return view('welcome');
-})->name('home');
+});
+Route::any('/home', function () {
+    return view('home');
+});
 
 Route::get('/vendor-product', function () {
+
     return view('vendor-product');
 })->name('vendor-product');

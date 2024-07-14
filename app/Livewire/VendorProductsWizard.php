@@ -152,6 +152,6 @@ class VendorProductsWizard extends Component implements HasForms
 
         session()->flash('message', 'تم إرسال البيانات بنجاح');
 
-        $this->redirectRoute('home');
+        $this->redirect('/');
     }
 }
