@@ -40,12 +40,7 @@ class VendorProductsWizard extends Component implements HasForms
     }
     public function form(Form $form): Form
     {
-        //     "name: string
-        // email: string nullable
-        // phone: string nullable
-        // address: string nullable
-        // city_id: foreign:cities
-        // branch_id: foreign:vendors nullable"
+
         return $form
             ->schema([
                 Wizard::make([
@@ -53,6 +48,7 @@ class VendorProductsWizard extends Component implements HasForms
                         ->schema([
                             TextInput::make('name')
                                 ->label('الاسم')
+                                ->required()
                                 ->maxLength(255),
                             TextInput::make('email')
                                 ->label('بريد الالكتروني')
@@ -66,6 +62,7 @@ class VendorProductsWizard extends Component implements HasForms
                             Select::make('region_id')
                                 ->label('المنطقة')
                                 ->options(Region::all()->pluck('name', 'id'))
+                                ->default(5)
                                 ->afterStateUpdated(fn (Get $get, Set $set) => $set('city_id', null))
                                 ->preload()
                                 ->searchable()
@@ -74,6 +71,7 @@ class VendorProductsWizard extends Component implements HasForms
                                 ->label('المدينة')
                                 ->options(fn (Get $get): Collection => City::query()->whereRegionId($get('region_id'))->pluck('name', 'id'))
                                 ->searchable()
+                                ->default(12)
                                 ->preload(),
                             Select::make('branch_id')
                                 ->label('اختر الشركة التابعة')
@@ -81,43 +79,43 @@ class VendorProductsWizard extends Component implements HasForms
                                 ->preload()
                                 ->searchable(),
                         ]),
-                    //                     "name: string
-                    // description: string nullable
-                    // image: string nullable
-                    // vendor_id: foreign:vendors
-                    // product_type_id: foreign:product_types
-                    // cost: float default:0.0"
                     Step::make(' الاصناف')
                         ->schema([
                             Repeater::make('products')
                                 ->label('المنتجات')
                                 ->minItems(1)
-                                // ->columns([
-                                //     'md' => 2
-                                // ])
+                                ->columns([
+                                    'md' => 3
+                                ])
                                 ->schema([
                                     TextInput::make('name')
                                         ->label('اسم المنتج')
                                         ->maxLength(255)
                                         ->required(),
-                                    TextInput::make('description')
-                                        ->label('')
-                                        ->required(),
-                                    Select::make('vendor_id')
-                                        ->label('')
-                                        ->options(Vendor::all()->pluck('name', 'id'))
-                                        ->searchable()
-                                        ->preload()
+                                    TextInput::make('cost')
+                                        ->label('السعر')
+                                        ->default(0.0)
                                         ->required(),
                                     Select::make('product_type_id')
-                                        ->label('')
+                                        ->label('نوع الخضار')
                                         ->options(ProductType::all()->pluck('name', 'id'))
                                         ->searchable()
                                         ->preload()
+                                        ->default(1)
+                                        ->createOptionForm([
+                                            TextInput::make('name')
+                                                ->label('نوع الخضار')
+
+                                                ->maxLength(255)
+                                                ->required(),
+                                        ])
+                                        ->createOptionUsing(function (array $data): int {
+                                            return ProductType::create($data)->getKey();
+                                        })
                                         ->required(),
                                     TextInput::make('description')
-                                        ->label('')
-                                        ->required(),
+                                        ->columnSpanFull()
+                                        ->label('التفاصيل'),
                                 ]),
 
                         ]),
@@ -130,77 +128,30 @@ class VendorProductsWizard extends Component implements HasForms
     }
     public function submit(): void
     {
+        $this->validate();
         // if (app()->hasDebugModeEnabled()) {
-        dd($this->data);
+        // dd($this->data);
         // }
 
-        $this->validate();
 
         DB::transaction(function () {
-            /** @var TemporaryUploadedFile $license_file */
-            $license_file = Arr::first($this->data['license_file']);
 
-            //     $factory = Factory::create([
-            //         'name' => $this->data['name'],
-            //         'license_number' => $this->data['license_number'],
-            //         'license_file' => $license_file->store(),
-            //         'city_id' => $this->data['city_id'],
-            //         'lat' => $this->data['location']['lat'],
-            //         'lng' => $this->data['location']['lng'],
-            //         'area' => $this->data['area'],
-            //         'max_production_capacity' => $this->data['max_production_capacity'],
-            //     ]);
+            $vendor = Vendor::create([
+                "name" => $this->data['name'],
+                "email" => $this->data['email'],
+                "phone" => $this->data['phone'],
+                "address" => $this->data['address'],
+                "region_id" => $this->data['region_id'],
+                "city_id" => $this->data['city_id'],
+                "branch_id" => $this->data['branch_id'],
+            ]);
 
-            //     $factory->managers()->createMany([
-            //         [
-            //             'name' => $this->data['general_manager_name'],
-            //             'phone' => $this->data['general_manager_phone'],
-            //             'email' => $this->data['general_manager_email'],
+            $vendor->products()->createMany($this->data['products']);
 
-            //         ],
-            //         [
-            //             'name' => $this->data['production_manager_name'],
-            //             'phone' => $this->data['production_manager_phone'],
-            //             'email' => $this->data['production_manager_email'],
-
-            //         ],
-            //         [
-            //             'name' => $this->data['quality_manager_name'],
-            //             'phone' => $this->data['quality_manager_phone'],
-            //             'email' => $this->data['quality_manager_email'],
-
-            //         ],
-            //     ]);
-
-            //     $factory->productionHalls()->createMany($this->data['production_halls']);
-
-            //     $factory->storages()->createMany($this->data['storages']);
-
-            //     collect($this->data['factory_products'])
-            //         ->each(function (array $item) use ($factory) {
-            //             $product_packaging = $item['product_packaging'];
-
-            //             $factory_product = $factory->factoryProducts()->create(Arr::except($item, 'product_packaging'));
-
-            //             $factory_product->productPackaging()->createMany($product_packaging);
-            //         });
-
-            //     collect($this->data['production_lines'])
-            //         ->each(function (array $item) use ($factory) {
-            //             $machines = $item['machines'];
-
-            //             $factory_products = $factory->factoryProducts()->whereIn('product_id', $item['factory_products'])->pluck('id');
-
-            //             $production_line = $factory->productionLines()->create(Arr::except($item, ['machines', 'factory_products']));
-
-            //             $production_line->machines()->attach(data_get($machines, '*.machine_id'));
-
-            //             $production_line->factoryProducts()->attach($factory_products);
-            //         });
         });
 
-        // // session()->flash('message', 'تم إرسال البيانات بنجاح');
+        session()->flash('message', 'تم إرسال البيانات بنجاح');
 
-        // $this->redirectRoute('home');
+        $this->redirectRoute('home');
     }
 }
