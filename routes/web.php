@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\VendorProductsWizard;
+use App\Livewire\VendorTransportationsWizard;
 use Illuminate\Support\Facades\Route;
 
 Route::any('/', function () {
@@ -9,7 +11,12 @@ Route::any('/home', function () {
     return view('home');
 });
 
-Route::get('/vendor-product', function () {
+Route::get('/vendor-product', VendorProductsWizard::class)->name('vendor-product');
+Route::get('/vendor-transportations', VendorTransportationsWizard::class)->name('vendor-transportations');
 
-    return view('vendor-product');
-})->name('vendor-product');
+
+// Route::get('/vendor-product', function () {
+
+//     return view('vendor-product');
+// })->name('vendor-product');
+

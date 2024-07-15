@@ -7,7 +7,8 @@
     
       <div class="mx-auto max-w-2xl lg:mx-0 lg:max-w-none ">
         <div class="grid grid-cols-1 text-base font-semibold text-black sm:grid-cols-2 md:flex lg:gap-x-10">
-          <a href="/vendor-product">Vendor products </a>
+          <a href="{{route('vendor-product')}}">Vendor products </a>
+          <a href="{{route('vendor-transportations')}}">Vendor transportations </a>
           <a href="/home">home </a>
         </div>
         

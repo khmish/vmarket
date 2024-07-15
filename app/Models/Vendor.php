@@ -52,6 +52,11 @@ class Vendor extends Model
         return $this->hasMany(DeliveryZone::class);
     }
 
+    public function vendorCars(): HasMany
+    {
+        return $this->hasMany(VendorCar::class);
+    }
+
     public function city(): BelongsTo
     {
         return $this->belongsTo(City::class);

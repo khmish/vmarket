@@ -2,8 +2,10 @@
 
 namespace App\Livewire;
 
+use App\Models\CarType;
 use App\Models\City;
 use App\Models\ProductType;
+use App\Models\RefrigeratingType;
 use App\Models\Region;
 use App\Models\Vendor;
 use Filament\Forms\Components\Repeater;
@@ -23,7 +25,7 @@ use Filament\Forms\Get;
 use Filament\Forms\Set;
 use Illuminate\Support\Collection;
 
-class VendorTransportations extends Component  implements HasForms
+class VendorTransportationsWizard extends Component  implements HasForms
 {
     use InteractsWithForms;
 
@@ -78,46 +80,93 @@ class VendorTransportations extends Component  implements HasForms
                                 ->preload()
                                 ->searchable(),
                         ]),
-                    Step::make('السيارات')
+                    Step::make('المركبات')
                         ->schema([
-                            Repeater::make('cars')
-                                ->label('المنتجات')
+                            Repeater::make('vendorCars')
+                                ->label('المركبات')
                                 ->minItems(1)
                                 ->columns([
                                     'md' => 3
                                 ])
                                 ->schema([
                                     TextInput::make('name')
-                                        ->label('اسم المنتج')
+                                        ->label('اسم المركبة')
                                         ->maxLength(255)
+                                        ->columnSpanFull()
                                         ->required(),
-                                    TextInput::make('cost')
-                                        ->label('السعر')
+                                    TextInput::make('capacity')
+                                        ->label('السعة بالطن')
                                         ->default(0.0)
                                         ->required(),
-                                    Select::make('product_type_id')
-                                        ->label('نوع الخضار')
-                                        ->options(ProductType::all()->pluck('name', 'id'))
+                                    Select::make('car_type_id')
+                                        ->label('نوع المركبة')
+                                        ->options(CarType::all()->pluck('name', 'id'))
                                         ->searchable()
                                         ->preload()
                                         ->default(1)
                                         ->createOptionForm([
                                             TextInput::make('name')
-                                                ->label('نوع الخضار')
+                                                ->label('نوع المركبة')
 
                                                 ->maxLength(255)
                                                 ->required(),
                                         ])
                                         ->createOptionUsing(function (array $data): int {
-                                            return ProductType::create($data)->getKey();
+                                            return CarType::create($data)->getKey();
                                         })
                                         ->required(),
-                                    TextInput::make('description')
-                                        ->columnSpanFull()
-                                        ->label('التفاصيل'),
+                                    Select::make('refrigerating_type_id')
+                                        ->label('نوع التخزين في المركبة')
+                                        ->options(RefrigeratingType::all()->pluck('name', 'id'))
+                                        ->searchable()
+                                        ->preload()
+                                        ->default(1)
+                                        ->createOptionForm([
+                                            TextInput::make('name')
+                                                ->label('نوع التخزين في المركبة')
+
+                                                ->maxLength(255)
+                                                ->required(),
+                                        ])
+                                        ->createOptionUsing(function (array $data): int {
+                                            return RefrigeratingType::create($data)->getKey();
+                                        })
+                                        ->required(),
                                 ]),
 
                         ]),
+
+                    Step::make('نطاق التوصيل')
+                        ->schema([
+                            Repeater::make('deliveryZones')
+                                ->label('نطاق التوصيل')
+                                ->minItems(1)
+                                ->columns([
+                                    'md' => 3
+                                ])
+                                ->schema([
+                                    TextInput::make('cost')
+                                ->label('التكلفة')
+                                ->maxLength(255),
+                            Select::make('region_id')
+                                ->label('المنطقة')
+                                ->options(Region::all()->pluck('name', 'id'))
+                                ->default(5)
+                                ->afterStateUpdated(fn (Get $get, Set $set) => $set('city_id', null))
+                                ->preload()
+                                ->searchable()
+                                ->reactive(),
+                            Select::make('city_id')
+                                ->label('المدينة')
+                                ->options(fn (Get $get): Collection => City::query()->whereRegionId($get('region_id'))->pluck('name', 'id'))
+                                ->searchable()
+                                ->default(12)
+                                ->preload(),
+                                ])
+                            
+
+                        ]),
+
                 ])->submitAction(new HtmlString(Blade::render(<<<BLADE
                 <x-filament::button  type="submit"  size="sm">
                     Submit
@@ -145,8 +194,8 @@ class VendorTransportations extends Component  implements HasForms
                 "branch_id" => $this->data['branch_id'],
             ]);
 
-            $vendor->products()->createMany($this->data['products']);
-
+            $vendor->vendorCars()->createMany($this->data['vendorCars']);
+            $vendor->deliveryZones()->createMany($this->data['deliveryZones']);
         });
 
         session()->flash('message', 'تم إرسال البيانات بنجاح');
