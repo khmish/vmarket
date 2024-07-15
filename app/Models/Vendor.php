@@ -36,7 +36,10 @@ class Vendor extends Model
         'city_id' => 'integer',
         'branch_id' => 'integer',
     ];
-
+    public function cars()
+    {
+        return $this->belongsToMany(Car::class, 'vendor_cars');
+    }
     public function products(): HasMany
     {
         return $this->hasMany(Product::class);

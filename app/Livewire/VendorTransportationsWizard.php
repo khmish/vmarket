@@ -178,7 +178,7 @@ class VendorTransportationsWizard extends Component  implements HasForms
     {
         $this->validate();
         // if (app()->hasDebugModeEnabled()) {
-        dd($this->data);
+        // dd($this->data);
         // }
 
 
@@ -194,12 +194,12 @@ class VendorTransportationsWizard extends Component  implements HasForms
                 "branch_id" => $this->data['branch_id'],
             ]);
 
-            $vendor->vendorCars()->createMany($this->data['vendorCars']);
+            $vendor->cars()->createMany($this->data['vendorCars']);
             $vendor->deliveryZones()->createMany($this->data['deliveryZones']);
         });
 
         session()->flash('message', 'تم إرسال البيانات بنجاح');
 
-        $this->redirectRoute('home');
+        $this->redirect('home');
     }
 }
