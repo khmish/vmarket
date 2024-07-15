@@ -2,14 +2,17 @@
 
 use App\Livewire\VendorProductsWizard;
 use App\Livewire\VendorTransportationsWizard;
+use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::any('/', function () {
-    return view('welcome');
+    $products=Product::query()->paginate(5)->withQueryString();
+    // dd($products);
+    return view('welcome',['products'=>$products]);
 });
 Route::any('/home', function () {
-    return view('home');
-});
+    return redirect('/');
+})->name('home');
 
 Route::get('/vendor-product', VendorProductsWizard::class)->name('vendor-product');
 Route::get('/vendor-transportations', VendorTransportationsWizard::class)->name('vendor-transportations');
@@ -19,4 +22,3 @@ Route::get('/vendor-transportations', VendorTransportationsWizard::class)->name(
 
 //     return view('vendor-product');
 // })->name('vendor-product');
-
