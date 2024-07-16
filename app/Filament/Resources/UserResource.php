@@ -24,23 +24,29 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('user.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                    ->label(__('user.email'))
                     ->email()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('vendor_id')
+                    ->label(__('user.vendor_id'))
                     ->relationship('vendor', 'name'),
                 Forms\Components\TextInput::make('password')
+                    ->label(__('user.password'))
                     ->password()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('role')
+                    ->label(__('user.role'))
                     ->required()
                     ->maxLength(255)
                     ->default('admin'),
-                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\DateTimePicker::make('email_verified_at')
+                    ->label(__('user.email_verified_at')),
             ]);
     }
 
