@@ -19,6 +19,16 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+   
+    public static function getLabel(): ?string
+    {
+        return __('user.user');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('user.users');
+    }
+
     public static function form(Form $form): Form
     {
         return $form
