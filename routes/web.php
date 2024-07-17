@@ -6,9 +6,7 @@ use App\Models\Product;
 use Illuminate\Support\Facades\Route;
 
 Route::any('/', function () {
-    $products=Product::query()->paginate(5)->withQueryString();
-    // dd($products);
-    return view('welcome',['products'=>$products]);
+    return "<h1>hello</h1>";
 });
 Route::any('/home', function () {
     return redirect('/');
