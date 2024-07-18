@@ -18,24 +18,26 @@ class CarTypeResource extends Resource
     protected static ?string $model = CarType::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    
+
     public static function getNavigationGroup(): ?string
     {
         return __('car.cars');
     }
+
     public static function getLabel(): ?string
     {
-        return __('user.user');
+        return __('carType.car_type');
     }
     public static function getPluralLabel(): ?string
     {
-        return __('user.users');
+        return __('carType.car_types');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                    ->label(__('carType.name'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -46,6 +48,7 @@ class CarTypeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label(__('carType.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
