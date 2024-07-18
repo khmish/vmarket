@@ -32,7 +32,7 @@
         </div>
     @endif
     </div>
-    @livewire('database-notifications')
+    {{-- @livewire('database-notifications') --}}
     {{ $slot }}
     <x-footer />
     @filamentScripts
