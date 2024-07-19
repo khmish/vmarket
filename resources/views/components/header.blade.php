@@ -42,11 +42,11 @@
         </div>
         <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center mt-4 ">
             <div class="flex flex-col sm:flex-row">
-                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{ route('home') }}">Home</a>
-                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{ route('vendor-product') }}">Vendor products </a>
-                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{route('vendor-transportations')}}">Vendor transportations </a>
+                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{ route('home') }}">{{ __('home.home') }}</a>
+                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{ route('vendor-product') }}">{{ __('home.vendor_products') }}</a>
+                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{route('vendor-transportations')}}">{{ __('home.vendor_transportations') }} </a>
                 {{-- <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="">Cart</a> --}}
-                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="">Contact</a>
+                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="/admin">{{ __('home.control_panel') }}</a>
             </div>
         </nav>
 
