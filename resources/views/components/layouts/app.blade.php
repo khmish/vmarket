@@ -41,6 +41,10 @@
 </head>
 
 <body class="antialiased">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMF7Q9Q3" height="0" width="0"
+            style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
     @livewire('components.popup-banner')
     <x-header />
 
@@ -57,10 +61,7 @@
     @filamentScripts
     @livewireScripts
     @vite('resources/js/app.js')
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WMF7Q9Q3" height="0" width="0"
-            style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
+
 </body>
 
 </html>
