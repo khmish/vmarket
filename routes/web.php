@@ -4,7 +4,6 @@ use App\Livewire\VendorProductsWizard;
 use App\Livewire\VendorTransportationsWizard;
 use App\Models\Product;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
 
 Route::any('/', function () {
     $products = Product::query()->paginate(5)->withQueryString();
@@ -12,12 +11,14 @@ Route::any('/', function () {
     return view('welcome', ['products' => $products]);
 });
 Route::get('/language/{locale}', function ($locale) {
-    if (! in_array($locale, ['en', 'ar'])) {
-        abort(400);
+
+    dd('language');
+    if (array_key_exists($locale, ['en', 'ar'])) {
+        session()->put('locale', $locale);
     }
-    App::setLocale($locale);
+
     return redirect()->back();
-})->name('locale');
+})->name('locale')->middleware('SetLocaleM');
 
 Route::any('/home', function () {
     return redirect('/');
@@ -26,3 +27,8 @@ Route::any('/home', function () {
 Route::get('/vendor-product', VendorProductsWizard::class)->name('vendor-product');
 Route::get('/vendor-transportations', VendorTransportationsWizard::class)->name('vendor-transportations');
 
+
+// Route::get('/vendor-product', function () {
+
+//     return view('vendor-product');
+// })->name('vendor-product');
