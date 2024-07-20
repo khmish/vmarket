@@ -12,7 +12,7 @@ Route::any('/', function () {
 });
 Route::get('/language/{locale}', function ($locale) {
       session()->put('locale', $locale);
-    return redirect('/');
+    return redirect("home");
 })->name('locale')->middleware('setLocale');
 
 Route::any('/home', function () {
