@@ -19,14 +19,29 @@ class CountryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    public static function getNavigationGroup(): ?string
+    {
+        return __('country.countries');
+    }
+    
+    public static function getLabel(): ?string
+    {
+        return __('country.country');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('country.countries');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                ->label(__('country.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('code')
+                ->label(__('country.code'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -37,8 +52,10 @@ class CountryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                ->label(__('country.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('code')
+                ->label(__('country.code'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

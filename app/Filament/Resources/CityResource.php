@@ -18,15 +18,29 @@ class CityResource extends Resource
     protected static ?string $model = City::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    public static function getNavigationGroup(): ?string
+    {
+        return __('country.countries');
+    }
+    
+    public static function getLabel(): ?string
+    {
+        return __('city.city');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('city.cities');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                ->label(__('city.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('region_id')
+                ->label(__('city.region'))
                     ->relationship('region', 'name')
                     ->required(),
             ]);
@@ -37,8 +51,10 @@ class CityResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                ->label(__('city.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('region.name')
+                ->label(__('city.region'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

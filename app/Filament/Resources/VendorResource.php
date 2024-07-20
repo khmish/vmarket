@@ -18,26 +18,43 @@ class VendorResource extends Resource
     protected static ?string $model = Vendor::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    public static function getNavigationGroup(): ?string
+    {
+        return __('vendor.vendors');
+    }
+    public static function getLabel(): ?string
+    {
+        return __('vendor.vendor');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('vendor.vendors');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                ->label(__('vendor.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
+                ->label(__('vendor.email'))
                     ->email()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
+                ->label(__('vendor.phone'))
                     ->tel()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address')
+                ->label(__('vendor.address'))
                     ->maxLength(255),
                 Forms\Components\Select::make('city_id')
+                ->label(__('vendor.city'))
                     ->relationship('city', 'name')
                     ->required(),
                 Forms\Components\Select::make('branch_id')
+                ->label(__('vendor.branch'))
                     ->relationship('branch', 'name'),
             ]);
     }
@@ -47,17 +64,23 @@ class VendorResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                ->label(__('vendor.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
+                ->label(__('vendor.email'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
+                ->label(__('vendor.phone'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
+                ->label(__('vendor.address'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('city.name')
+                ->label(__('vendor.city'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('branch.name')
+                ->label(__('vendor.branch'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

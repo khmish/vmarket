@@ -26,6 +26,16 @@
             <div class="w-full text-blue-100 md:text-center font-mono text-4xl font-semibold uppercase tracking-widest">
                 Vmarket
             </div>
+            <div class="flex space-x-4 ">
+
+                <a class="px-2" href="{{ route('locale', 'ar') }}">
+                    <x-dynamic-component :component="'flag-country-sa'" class="w-6 h-6" />
+                </a>
+                <a href="{{ route('locale', 'en') }}">
+                    <x-dynamic-component :component="'flag-country-us'" class="w-6 h-6" />
+                </a>
+
+            </div>
             <div class="flex items-center justify-end w-full">
                 <button class="text-gray-100 focus:outline-none mx-4 sm:mx-0">
                     <i class="gg-shopping-cart"></i>
@@ -42,11 +52,15 @@
         </div>
         <nav :class="isOpen ? '' : 'hidden'" class="sm:flex sm:justify-center sm:items-center mt-4 ">
             <div class="flex flex-col sm:flex-row">
-                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{ route('home') }}">{{ __('home.home') }}</a>
-                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{ route('vendor-product') }}">{{ __('home.vendor_products') }}</a>
-                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="{{route('vendor-transportations')}}">{{ __('home.vendor_transportations') }} </a>
+                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0"
+                    href="{{ route('home') }}">{{ __('home.home') }}</a>
+                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0"
+                    href="{{ route('vendor-product') }}">{{ __('home.vendor_products') }}</a>
+                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0"
+                    href="{{ route('vendor-transportations') }}">{{ __('home.vendor_transportations') }} </a>
                 {{-- <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="">Cart</a> --}}
-                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0" href="/admin">{{ __('home.control_panel') }}</a>
+                <a class="mt-3 text-gray-100 hover:underline sm:mx-3 sm:mt-0"
+                    href="/admin">{{ __('home.control_panel') }}</a>
             </div>
         </nav>
 

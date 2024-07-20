@@ -18,12 +18,24 @@ class ProductTypeResource extends Resource
     protected static ?string $model = ProductType::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    public static function getNavigationGroup(): ?string
+    {
+        return __('vendor.vendors');
+    }
+    public static function getLabel(): ?string
+    {
+        return __('ProductType.product_type');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('ProductType.product_types');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
+                ->label(__('ProductType.name'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -34,6 +46,7 @@ class ProductTypeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                ->label(__('ProductType.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

@@ -18,18 +18,33 @@ class DeliveryZoneResource extends Resource
     protected static ?string $model = DeliveryZone::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    
+    public static function getNavigationGroup(): ?string
+    {
+        return __('vendor.vendors');
+    }
+    public static function getLabel(): ?string
+    {
+        return __('DeliveryZone.delivery_zone');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('DeliveryZone.delivery_zones');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('city_id')
+                ->label(__('DeliveryZone.city'))
                     ->relationship('city', 'name')
                     ->required(),
                 Forms\Components\Select::make('vendor_id')
+                ->label(__('DeliveryZone.vendor'))
                     ->relationship('vendor', 'name')
                     ->required(),
                 Forms\Components\TextInput::make('cost')
+                ->label(__('DeliveryZone.cost'))
                     ->required()
                     ->numeric()
                     ->default(0)
@@ -42,12 +57,15 @@ class DeliveryZoneResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('city.name')
+                ->label(__('DeliveryZone.city'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('vendor.name')
+                ->label(__('DeliveryZone.vendor'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('cost')
+                ->label(__('DeliveryZone.cost'))
                     ->money()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

@@ -20,17 +20,26 @@ class VendorCarResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     public static function getNavigationGroup(): ?string
     {
-        return __('car.cars');
+        return __('vendor.vendors');
     }
-
+    public static function getLabel(): ?string
+    {
+        return __('VendorCar.vendor_car');
+    }
+    public static function getPluralLabel(): ?string
+    {
+        return __('VendorCar.vendor_cars');
+    }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Select::make('car_id')
+                ->label(__('VendorCar.car'))
                     ->relationship('car', 'name')
                     ->required(),
                 Forms\Components\Select::make('vendor_id')
+                ->label(__('VendorCar.vendor'))
                     ->relationship('vendor', 'name')
                     ->required(),
             ]);
@@ -41,9 +50,11 @@ class VendorCarResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('car.name')
+                ->label(__('VendorCar.car'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('vendor.name')
+                ->label(__('VendorCar.vendor'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')
