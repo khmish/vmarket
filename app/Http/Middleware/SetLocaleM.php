@@ -16,10 +16,8 @@ class SetLocaleM
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! in_array(session("locale"), ['en', 'ar'])) {
-            abort(400);
-        }
-        App::setLocale(session("locale"));
+        
+        App::setLocale(session('locale'));
         return $next($request);
     }
 }

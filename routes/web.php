@@ -11,14 +11,9 @@ Route::any('/', function () {
     return view('welcome', ['products' => $products]);
 });
 Route::get('/language/{locale}', function ($locale) {
-
-    dd('language');
-    if (array_key_exists($locale, ['en', 'ar'])) {
-        session()->put('locale', $locale);
-    }
-
-    return redirect()->back();
-})->name('locale')->middleware('SetLocaleM');
+      session()->put('locale', $locale);
+    return redirect('/');
+})->name('locale')->middleware('setLocale');
 
 Route::any('/home', function () {
     return redirect('/');
