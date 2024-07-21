@@ -21,27 +21,27 @@ class RegionResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('country.countries');
+        return __('Country.countries');
     }
 
     public static function getLabel(): ?string
     {
-        return __('region.region');
+        return __('Region.region');
     }
     public static function getPluralLabel(): ?string
     {
-        return __('region.regions');
+        return __('Region.regions');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label(__('region.name'))
+                    ->label(__('Region.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('country_id')
-                    ->label(__('region.country'))
+                    ->label(__('Region.country'))
                     ->relationship('country', 'name')
                     ->required(),
             ]);
@@ -52,10 +52,10 @@ class RegionResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('region.name'))
+                    ->label(__('Region.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('country.name')
-                    ->label(__('region.country'))
+                    ->label(__('Region.country'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

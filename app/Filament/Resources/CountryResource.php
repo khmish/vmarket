@@ -21,27 +21,27 @@ class CountryResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('country.countries');
+        return __('Country.countries');
     }
     
     public static function getLabel(): ?string
     {
-        return __('country.country');
+        return __('Country.country');
     }
     public static function getPluralLabel(): ?string
     {
-        return __('country.countries');
+        return __('Country.countries');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                ->label(__('country.name'))
+                ->label(__('Country.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('code')
-                ->label(__('country.code'))
+                ->label(__('Country.code'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -52,10 +52,10 @@ class CountryResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                ->label(__('country.name'))
+                ->label(__('Country.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('code')
-                ->label(__('country.code'))
+                ->label(__('Country.code'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

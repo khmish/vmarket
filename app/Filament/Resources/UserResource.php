@@ -22,11 +22,11 @@ class UserResource extends Resource
 
     public static function getLabel(): ?string
     {
-        return __('user.user');
+        return __('User.user');
     }
     public static function getPluralLabel(): ?string
     {
-        return __('user.users');
+        return __('User.users');
     }
 
     public static function form(Form $form): Form
@@ -34,29 +34,29 @@ class UserResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label(__('user.name'))
+                    ->label(__('User.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
-                    ->label(__('user.email'))
+                    ->label(__('User.email'))
                     ->email()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('vendor_id')
-                    ->label(__('user.vendor_id'))
+                    ->label(__('User.vendor_id'))
                     ->relationship('vendor', 'name'),
                 Forms\Components\TextInput::make('password')
-                    ->label(__('user.password'))
+                    ->label(__('User.password'))
                     ->password()
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('role')
-                    ->label(__('user.role'))
+                    ->label(__('User.role'))
                     ->required()
                     ->maxLength(255)
                     ->default('admin'),
                 Forms\Components\DateTimePicker::make('email_verified_at')
-                    ->label(__('user.email_verified_at')),
+                    ->label(__('User.email_verified_at')),
             ]);
     }
 
@@ -65,30 +65,30 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('user.name'))
+                    ->label(__('User.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
-                    ->label(__('user.email'))
+                    ->label(__('User.email'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('vendor.name')
                     ->label(__('vendor.name'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('role')
-                    ->label(__('user.role'))
+                    ->label(__('User.role'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label(__('user.name'))
+                    ->label(__('User.name'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('updated_at')
-                    ->label(__('user.updated_at'))
+                    ->label(__('User.updated_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
                 Tables\Columns\TextColumn::make('deleted_at')
-                    ->label(__('user.deleted_at'))
+                    ->label(__('User.deleted_at'))
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),

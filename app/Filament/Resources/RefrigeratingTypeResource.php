@@ -21,7 +21,7 @@ class RefrigeratingTypeResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('vendor.vendors');
+        return __('Vendor.vendors');
     }
     public static function getLabel(): ?string
     {

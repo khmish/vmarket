@@ -21,23 +21,23 @@ class CarTypeResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return __('car.cars');
+        return __('Car.cars');
     }
 
     public static function getLabel(): ?string
     {
-        return __('carType.car_type');
+        return __('CarType.car_type');
     }
     public static function getPluralLabel(): ?string
     {
-        return __('carType.car_types');
+        return __('CarType.car_types');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                    ->label(__('carType.name'))
+                    ->label(__('CarType.name'))
                     ->required()
                     ->maxLength(255),
             ]);
@@ -48,7 +48,7 @@ class CarTypeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                    ->label(__('carType.name'))
+                    ->label(__('CarType.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

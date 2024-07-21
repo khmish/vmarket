@@ -20,41 +20,41 @@ class VendorResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     public static function getNavigationGroup(): ?string
     {
-        return __('vendor.vendors');
+        return __('Vendor.vendors');
     }
     public static function getLabel(): ?string
     {
-        return __('vendor.vendor');
+        return __('Vendor.vendor');
     }
     public static function getPluralLabel(): ?string
     {
-        return __('vendor.vendors');
+        return __('Vendor.vendors');
     }
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('name')
-                ->label(__('vendor.name'))
+                ->label(__('Vendor.name'))
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
-                ->label(__('vendor.email'))
+                ->label(__('Vendor.email'))
                     ->email()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('phone')
-                ->label(__('vendor.phone'))
+                ->label(__('Vendor.phone'))
                     ->tel()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('address')
-                ->label(__('vendor.address'))
+                ->label(__('Vendor.address'))
                     ->maxLength(255),
                 Forms\Components\Select::make('city_id')
-                ->label(__('vendor.city'))
+                ->label(__('Vendor.city'))
                     ->relationship('city', 'name')
                     ->required(),
                 Forms\Components\Select::make('branch_id')
-                ->label(__('vendor.branch'))
+                ->label(__('Vendor.branch'))
                     ->relationship('branch', 'name'),
             ]);
     }
@@ -64,23 +64,23 @@ class VendorResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
-                ->label(__('vendor.name'))
+                ->label(__('Vendor.name'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
-                ->label(__('vendor.email'))
+                ->label(__('Vendor.email'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('phone')
-                ->label(__('vendor.phone'))
+                ->label(__('Vendor.phone'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('address')
-                ->label(__('vendor.address'))
+                ->label(__('Vendor.address'))
                     ->searchable(),
                 Tables\Columns\TextColumn::make('city.name')
-                ->label(__('vendor.city'))
+                ->label(__('Vendor.city'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('branch.name')
-                ->label(__('vendor.branch'))
+                ->label(__('Vendor.branch'))
                     ->numeric()
                     ->sortable(),
                 Tables\Columns\TextColumn::make('created_at')

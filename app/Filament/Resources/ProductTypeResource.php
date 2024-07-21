@@ -20,7 +20,7 @@ class ProductTypeResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     public static function getNavigationGroup(): ?string
     {
-        return __('vendor.vendors');
+        return __('Vendor.vendors');
     }
     public static function getLabel(): ?string
     {
