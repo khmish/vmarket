@@ -27,13 +27,14 @@
                 Vmarket
             </div>
             <div class="flex space-x-4 ">
-
-                <a class="px-2" href="{{ route('locale', 'ar') }}">
+                {{-- <filament-language-switch/> --}}
+                <livewire:filament-language-switch />
+                {{-- <a class="px-2" href="{{ route('locale', 'ar') }}">
                     <x-dynamic-component :component="'flag-country-sa'" class="w-6 h-6" />
                 </a>
                 <a href="{{ route('locale', 'en') }}">
                     <x-dynamic-component :component="'flag-country-us'" class="w-6 h-6" />
-                </a>
+                </a> --}}
 
             </div>
             <div class="flex items-center justify-end w-full">

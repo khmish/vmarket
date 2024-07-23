@@ -28,14 +28,16 @@ class AppServiceProvider extends ServiceProvider
                 ->outsidePanelRoutes([
                     'profile',
                     'home',
-                    '/',
+                    'welcome',
+                    'vendor-product',
+                    'vendor-transportations',
                     // Additional custom routes where the switcher should be visible outside panels
                 ])
                 ->flags([
                     'ar' => asset('flags/saudi-arabia.svg'),
                     'en' => asset('flags/usa.svg'),
                 ])
-                ->flagsOnly()
+                // ->flagsOnly()
                 ->circular()
                 ->outsidePanelPlacement(Placement::TopCenter);
         });
