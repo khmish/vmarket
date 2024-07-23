@@ -45,23 +45,23 @@ class VendorTransportationsWizard extends Component  implements HasForms
         return $form
             ->schema([
                 Wizard::make([
-                    Step::make('معلومات عامة')
+                    Step::make(__('home.vendor_info'))
                         ->schema([
                             TextInput::make('name')
-                                ->label('الاسم')
+                                ->label(__('Vendor.name'))
                                 ->required()
                                 ->maxLength(255),
                             TextInput::make('email')
-                                ->label('بريد الالكتروني')
+                                ->label(__('Vendor.email'))
                                 ->maxLength(255),
                             TextInput::make('phone')
-                                ->label('رقم الهاتف')
+                                ->label(__('Vendor.phone'))
                                 ->maxLength(255),
                             TextInput::make('address')
-                                ->label('عنوان')
+                                ->label(__('Vendor.address'))
                                 ->maxLength(255),
                             Select::make('region_id')
-                                ->label('المنطقة')
+                                ->label(__('City.region'))
                                 ->options(Region::all()->pluck('name', 'id'))
                                 ->default(5)
                                 ->afterStateUpdated(fn (Get $get, Set $set) => $set('city_id', null))
@@ -69,44 +69,44 @@ class VendorTransportationsWizard extends Component  implements HasForms
                                 ->searchable()
                                 ->reactive(),
                             Select::make('city_id')
-                                ->label('المدينة')
+                                ->label(__('Vendor.city'))
                                 ->options(fn (Get $get): Collection => City::query()->whereRegionId($get('region_id'))->pluck('name', 'id'))
                                 ->searchable()
                                 ->default(12)
                                 ->preload(),
                             Select::make('branch_id')
-                                ->label('اختر الشركة التابعة')
+                                ->label(__('Vendor.branch'))
                                 ->options(Vendor::all()->pluck('name', 'id'))
                                 ->preload()
                                 ->searchable(),
                         ]),
-                    Step::make('المركبات')
+                    Step::make(__('VendorCar.vendor_cars'))
                         ->schema([
                             Repeater::make('vendorCars')
-                                ->label('المركبات')
+                                ->label(__('VendorCar.vendor_cars'))
                                 ->minItems(1)
                                 ->columns([
                                     'md' => 3
                                 ])
                                 ->schema([
                                     TextInput::make('name')
-                                        ->label('اسم المركبة')
+                                        ->label(__('VendorCar.name'))
                                         ->maxLength(255)
                                         ->columnSpanFull()
                                         ->required(),
                                     TextInput::make('capacity')
-                                        ->label('السعة بالطن')
+                                        ->label(__('VendorCar.capacity'))
                                         ->default(0.0)
                                         ->required(),
                                     Select::make('car_type_id')
-                                        ->label('نوع المركبة')
+                                        ->label(__('VendorCar.car_type'))
                                         ->options(CarType::all()->pluck('name', 'id'))
                                         ->searchable()
                                         ->preload()
                                         ->default(1)
                                         ->createOptionForm([
                                             TextInput::make('name')
-                                                ->label('نوع المركبة')
+                                                ->label(__('CarType.name'))
 
                                                 ->maxLength(255)
                                                 ->required(),
@@ -116,14 +116,14 @@ class VendorTransportationsWizard extends Component  implements HasForms
                                         })
                                         ->required(),
                                     Select::make('refrigerating_type_id')
-                                        ->label('نوع التخزين في المركبة')
+                                        ->label(__('VendorCar.refrigerating_type'))
                                         ->options(RefrigeratingType::all()->pluck('name', 'id'))
                                         ->searchable()
                                         ->preload()
                                         ->default(1)
                                         ->createOptionForm([
                                             TextInput::make('name')
-                                                ->label('نوع التخزين في المركبة')
+                                                ->label(__('RefrigeratingType.name'))
 
                                                 ->maxLength(255)
                                                 ->required(),
@@ -136,20 +136,20 @@ class VendorTransportationsWizard extends Component  implements HasForms
 
                         ]),
 
-                    Step::make('نطاق التوصيل')
+                    Step::make(__('DeliveryZone.delivery_zones'))
                         ->schema([
                             Repeater::make('deliveryZones')
-                                ->label('نطاق التوصيل')
+                                ->label(__('DeliveryZone.delivery_zones'))
                                 ->minItems(1)
                                 ->columns([
                                     'md' => 3
                                 ])
                                 ->schema([
                                     TextInput::make('cost')
-                                ->label('التكلفة')
+                                ->label(__('DeliveryZone.cost'))
                                 ->maxLength(255),
                             Select::make('region_id')
-                                ->label('المنطقة')
+                                ->label(__('City.region'))
                                 ->options(Region::all()->pluck('name', 'id'))
                                 ->default(5)
                                 ->afterStateUpdated(fn (Get $get, Set $set) => $set('city_id', null))
@@ -157,7 +157,7 @@ class VendorTransportationsWizard extends Component  implements HasForms
                                 ->searchable()
                                 ->reactive(),
                             Select::make('city_id')
-                                ->label('المدينة')
+                                ->label(__('DeliveryZone.city'))
                                 ->options(fn (Get $get): Collection => City::query()->whereRegionId($get('region_id'))->pluck('name', 'id'))
                                 ->searchable()
                                 ->default(12)

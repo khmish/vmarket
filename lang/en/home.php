@@ -1,9 +1,12 @@
 <?php
 
 return [
-    "home" => "home",
-    "vendor_products" => "Add vendor products",
-    "vendor_transportations" => "Add vendor transportation",
-    "control_panel" => "Control panel",
+    "home" => "Home",
+    "vendor_products" => "Register Vendor Products",
+    "vendor_transportations" => "Register Vendor Transportation",
+    "control_panel" => "Control Panel",
+    "vendor_info" => "Vendor Info",
+    "products" => "Products",
+    "all_product" => "All Products",
     
 ];

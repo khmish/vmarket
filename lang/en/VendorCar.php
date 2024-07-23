@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'vendor_cars'=>"Delivery vendors",
-    'vendor_car'=>"Delivery vendor",
+    'vendor_cars'=>"Vendor transportations",
+    'vendor_car'=>"Vendor transportation",
     'car'=>"Car",
-    'vendor'=>"Delivery vendor",
+    'vendor'=>"Vendor transportation",
 ];

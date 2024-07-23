@@ -44,23 +44,23 @@ class VendorProductsWizard extends Component implements HasForms
         return $form
             ->schema([
                 Wizard::make([
-                    Step::make('معلومات عامة')
+                    Step::make(__('home.vendor_info'))
                         ->schema([
                             TextInput::make('name')
-                                ->label('الاسم')
+                                ->label(__('Vendor.name'))
                                 ->required()
                                 ->maxLength(255),
                             TextInput::make('email')
-                                ->label('بريد الالكتروني')
+                                ->label(__('Vendor.email'))
                                 ->maxLength(255),
                             TextInput::make('phone')
-                                ->label('رقم الهاتف')
+                                ->label(__('Vendor.phone'))
                                 ->maxLength(255),
                             TextInput::make('address')
-                                ->label('عنوان')
+                                ->label(__('Vendor.address'))
                                 ->maxLength(255),
                             Select::make('region_id')
-                                ->label('المنطقة')
+                                ->label(__('City.region'))
                                 ->options(Region::all()->pluck('name', 'id'))
                                 ->default(5)
                                 ->afterStateUpdated(fn (Get $get, Set $set) => $set('city_id', null))
@@ -68,43 +68,43 @@ class VendorProductsWizard extends Component implements HasForms
                                 ->searchable()
                                 ->reactive(),
                             Select::make('city_id')
-                                ->label('المدينة')
+                                ->label(__('Vendor.city'))
                                 ->options(fn (Get $get): Collection => City::query()->whereRegionId($get('region_id'))->pluck('name', 'id'))
                                 ->searchable()
                                 ->default(12)
                                 ->preload(),
                             Select::make('branch_id')
-                                ->label('اختر الشركة التابعة')
+                                ->label(__('Vendor.branch'))
                                 ->options(Vendor::all()->pluck('name', 'id'))
                                 ->preload()
                                 ->searchable(),
                         ]),
-                    Step::make(' الاصناف')
+                    Step::make(__('home.products'))
                         ->schema([
                             Repeater::make('products')
-                                ->label('المنتجات')
+                                ->label(__('home.products'))
                                 ->minItems(1)
                                 ->columns([
                                     'md' => 3
                                 ])
                                 ->schema([
                                     TextInput::make('name')
-                                        ->label('اسم المنتج')
+                                        ->label(__('Product.name'))
                                         ->maxLength(255)
                                         ->required(),
                                     TextInput::make('cost')
-                                        ->label('السعر')
+                                        ->label(__('Product.cost'))
                                         ->default(0.0)
                                         ->required(),
                                     Select::make('product_type_id')
-                                        ->label('نوع الخضار')
+                                        ->label(__('Product.product_type'))
                                         ->options(ProductType::all()->pluck('name', 'id'))
                                         ->searchable()
                                         ->preload()
                                         ->default(1)
                                         ->createOptionForm([
                                             TextInput::make('name')
-                                                ->label('نوع الخضار')
+                                                ->label(__('ProductType.name'))
 
                                                 ->maxLength(255)
                                                 ->required(),
@@ -115,7 +115,7 @@ class VendorProductsWizard extends Component implements HasForms
                                         ->required(),
                                     TextInput::make('description')
                                         ->columnSpanFull()
-                                        ->label('التفاصيل'),
+                                        ->label(__('Product.description')),
                                 ]),
 
                         ]),
