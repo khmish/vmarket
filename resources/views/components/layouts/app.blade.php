@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"  @if (app()->getLocale()=='ar') dir="rtl" @else dir="ltr" @endif >
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"
+    @if (app()->getLocale() == 'ar') dir="rtl" @else dir="ltr" @endif>
 
 <head>
     <meta charset="utf-8" />
@@ -28,6 +29,23 @@
         })(window, document, 'script', 'dataLayer', 'GTM-WMF7Q9Q3');
     </script>
     <!-- End Google Tag Manager -->
+    <!-- START Formbricks Surveys -->
+    <script type="text/javascript">
+        ! function() {
+            var apiHost = "https://forms.halksa.xyz";
+            var environmentId = "clzcwchq6000812oknukq8gvr";
+            var t = document.createElement("script");
+            t.type = "text/javascript", t.async = !0, t.src = apiHost + "/api/packages/website";
+            var e = document.getElementsByTagName("script")[0];
+            e.parentNode.insertBefore(t, e), setTimeout(function() {
+                window.formbricks.init({
+                    environmentId: environmentId,
+                    apiHost: apiHost
+                })
+            }, 500)
+        }();
+    </script>
+    <!-- END Formbricks Surveys -->
 
     <style>
         [x-cloak] {
